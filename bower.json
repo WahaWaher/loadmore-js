@@ -1,0 +1,13 @@
+{
+  "name": "loadmore-js",
+  "version": "1.0.0",
+  "ignore": [
+    "node_modules",
+    "demo/libs"
+  ],
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "animate.css": "^3.7.0",
+    "highlightjs": "^9.12.0"
+  }
+}
