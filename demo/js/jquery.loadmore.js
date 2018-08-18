@@ -1,15 +1,9 @@
-/* jQuery.loadMore
-Version: 1.0.0
-Author: Sergey Kravchenko
-Repo: https://github.com/WahaWaher/loadmore-js
-Contacts: wahawaher@gmail.com */
 ;(function($) {
 
 	var methods = {
 
 		init: function(options) {
 
-			// Default Settings...
 			var  defaults = $.extend(true, {
 				url: 'ajax-loadmore.php', // Путь к PHP-обработчику
 				path: 'parts/', // Путь к каталогу с файлами записей
@@ -40,14 +34,14 @@ Contacts: wahawaher@gmail.com */
 				firstPostDelay: 0, // Задержка перед отображением первой записи из группы, мс
 				nextPostDelay: 0, // Задержка перед отображением каждой следующей записи из группы, мс
 
-				beforeInit:         function(sets) {},
-				afterInit:          function(sets) {},
-				onInitError:        function(sets) {},
-				beforeShowItem:     function(sets, curPost) {},
-				afterShowItem:      function(sets, curPost) {},
-				onShowItemError:    function(sets) {},
-				beforeShowItems:    function(sets) {},
-				afterShowItems:     function(sets) {}
+				beforeInit:         function() {},
+				afterInit:          function() {},
+				onInitError:        function() {},
+				beforeShowItem:     function() {},
+				afterShowItem:      function() {},
+				onShowItemError:    function() {},
+				beforeShowItems:    function() {},
+				afterShowItems:     function() {}
 
 			}, $.fn.loadMore.defaults);
 
@@ -130,10 +124,10 @@ Contacts: wahawaher@gmail.com */
 
 						// Событие на кнопке "Загрузить еще"
 						// ID для генерации уник.числа (пространство имен, обраб.)
-						sets._btnNameSpaceID = randomInteger(10000000, 99999999);
+						sets._nsid = randInt(10000000, 99999999);
 
 						if( typeof(layout.button.element) == 'object' ) {
-							layout.button.element.on(layout.button.event + '.lm-' + sets._btnNameSpaceID, function() {
+							layout.button.element.on(layout.button.event + '.lm-' + sets._nsid, function() {
 								methods.post.call($ths, sets.showMore);
 								return false;
 							});
@@ -150,10 +144,9 @@ Contacts: wahawaher@gmail.com */
 
 			});
 
-			return this;
+			return $(this);
+
 		},
-
-
 
 		post: function(count) {
 			var $ths = $(this), sets = $ths.data('settings'), layout = sets.layout;
@@ -334,7 +327,7 @@ Contacts: wahawaher@gmail.com */
 
 			}
 
-			return this;
+			return $(this);
 
 		},
 
@@ -348,14 +341,14 @@ Contacts: wahawaher@gmail.com */
 
 				// удал. обработчик (кнопка "Загрузить еще")
 				if( layout.button && layout.button.event )
-					layout.button.element.off( layout.button.event + '.lm-' + sets._btnNameSpaceID );
+					layout.button.element.off( layout.button.event + '.lm-' + sets._nsid );
 
 				$ths.children().remove();
 				$ths.removeData();
 
 			}
 
-			return this;
+			return $(this);
 
 		},
 
@@ -369,7 +362,7 @@ Contacts: wahawaher@gmail.com */
 				methods.init.call($ths, newOpts);
 			else methods.init.call($ths, oldOpts);
 
-			return this;
+			return $(this);
 
 		},
 
@@ -377,7 +370,7 @@ Contacts: wahawaher@gmail.com */
 	};
 
 	// Генератор случайного числа
-	function randomInteger(min, max) {
+	function randInt(min, max) {
 		var rand = min - 0.5 + Math.random() * (max - min + 1)
 		rand = Math.round(rand);
 		return rand;
@@ -388,6 +381,7 @@ Contacts: wahawaher@gmail.com */
 			return methods[ methodOrOptions ].apply( this, Array.prototype.slice.call( arguments, 1 ));
 		} else if ( typeof methodOrOptions === 'object' || ! methodOrOptions ) {
 			methods.init.apply( this, arguments );
+			return this;
 		} else {
 			$.error( 'Method ' +  methodOrOptions + ' does not exist on jQuery.loadMore' );
 		}    

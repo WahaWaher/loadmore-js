@@ -1,8 +1,13 @@
-<?php /* jQuery.loadMore
-Version: 1.0.0
-Author: Sergey Kravchenko
-Repo: https://github.com/WahaWaher/loadmore-js
-Contacts: wahawaher@gmail.com */
+<?php
+
+/**
+ * jQuery.loadMore
+ * Version: 1.0.2
+ * Repo: https://github.com/WahaWaher/loadmore-js
+ * Author: Sergey Kravchenko
+ * Contacts: wahawaher@gmail.com
+ * License: MIT
+ */
 
 # INIT
 if( isset($_POST['target']) && $_POST['target'] == 'init' ) {

@@ -7,7 +7,16 @@ const gulp = require('gulp'),
 		rename = require("gulp-rename"),
 		del = require('del'),
 		uglify = require("gulp-uglify"),
-		cssnano = require('gulp-cssnano');
+		cssnano = require('gulp-cssnano'),
+		headerComment = require('gulp-header-comment'),
+		headerInfo = `
+	    	jQuery.loadMore
+		   Version: 1.0.2
+		   Repo: https://github.com/WahaWaher/loadmore-js
+		   Author: Sergey Kravchenko
+		   Contacts: wahawaher@gmail.com
+		   License: MIT
+	  `;
 
 
 // BrowserSync
@@ -43,11 +52,13 @@ gulp.task('build', ['deldist', 'scss'], function() {
 	gulp.src([
 		'demo/js/jquery.loadmore.js'
 		])
+	.pipe(headerComment(headerInfo))
 	.pipe(gulp.dest('dist'));
 
 	gulp.src('demo/js/jquery.loadmore.js')
 	.pipe(uglify())
 	.pipe(rename({ suffix: '.min' }))
+	.pipe(headerComment(headerInfo))
 	.pipe(gulp.dest('dist'));
 
 	gulp.src(['demo/ajax-loadmore.php']).pipe(gulp.dest('dist/'));
